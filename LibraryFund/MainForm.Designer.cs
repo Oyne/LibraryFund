@@ -277,12 +277,14 @@
             this.Tables.Name = "Tables";
             this.Tables.Size = new System.Drawing.Size(121, 28);
             this.Tables.Text = "Tables";
+            this.Tables.SelectedIndexChanged += new System.EventHandler(this.Tables_SelectedIndexChanged);
             // 
             // Views
             // 
             this.Views.Name = "Views";
             this.Views.Size = new System.Drawing.Size(121, 28);
             this.Views.Text = "Views";
+            this.Views.SelectedIndexChanged += new System.EventHandler(this.Views_SelectedIndexChanged);
             // 
             // SearchAttribute
             // 
@@ -295,6 +297,7 @@
             this.SearchBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.SearchBox.Name = "SearchBox";
             this.SearchBox.Size = new System.Drawing.Size(200, 28);
+            this.SearchBox.TextChanged += new System.EventHandler(this.SearchBox_TextChanged);
             // 
             // FormMain
             // 

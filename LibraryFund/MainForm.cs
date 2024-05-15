@@ -1,113 +1,71 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace LibraryFund
 {
     public partial class FormMain : Form
     {
-        private SqlConnection connection = new SqlConnection();
-        private SqlDataAdapter dataAdapter = new SqlDataAdapter();
+        private static readonly string _connectionString = "Server=(localdb)\\mssqllocaldb;Database=Library_fund;Trusted_Connection=True;";
+        private static readonly SqlConnection _connection = new SqlConnection(_connectionString);
+        private SqlDataAdapter _dataAdapter = new SqlDataAdapter();
 
         public FormMain()
         {
             InitializeComponent();
-            if (Properties.Settings.Default.FormSize != null)
-            {
-                Size = Properties.Settings.Default.FormSize;
 
-            }
+            Size = Properties.Settings.Default.FormSize;
 
             dataBaseGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             Tables.DropDownStyle = ComboBoxStyle.DropDownList;
             Views.DropDownStyle = ComboBoxStyle.DropDownList;
+            SearchAttribute.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            connection.ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Library_fund;Trusted_Connection=True;";
+            FillComboBoxes();
+        }
+
+        private void FillComboBoxes()
+        {
             try
             {
-
-                connection.Open();
-                DataTable tables = connection.GetSchema("Tables", new string[] { null, null, null, "BASE TABLE" });
-                foreach (DataRow row in tables.Rows)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string tableName = (string)row["TABLE_NAME"];
-                    Tables.Items.Add(tableName);
+                    connection.Open();
+
+                    DataTable tables = connection.GetSchema("Tables", new string[] { null, null, null, "BASE TABLE" });
+
+                    foreach (DataRow row in tables.Rows)
+                    {
+                        string tableName = (string)row["TABLE_NAME"];
+                        Tables.Items.Add(tableName);
+
+                    }
+
+                    DataTable views = connection.GetSchema("Tables", new string[] { null, null, null, "VIEW" });
+
+                    foreach (DataRow row in views.Rows)
+                    {
+                        string viewName = (string)row["TABLE_NAME"];
+                        Views.Items.Add(viewName);
+                    }
+
+                    MessageBox.Show("Connection is open", "Connection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+                    Tables.SelectedIndex = 0;
+
                 }
-
-                DataTable views = connection.GetSchema("Tables", new string[] { null, null, null, "VIEW" });
-                foreach (DataRow row in views.Rows)
-                {
-                    string viewName = (string)row["TABLE_NAME"];
-                    Views.Items.Add(viewName);
-                }
-
-                MessageBox.Show("Connection is open", "Connection",
-MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-
-                Tables.SelectedIndex = 0;
-
             }
             catch
             {
                 MessageBox.Show("Connection is not open", "Connection",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            GetData("select * from book", bindingSourceServerSQL, dataBaseGridView);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Lab 6\nBy Litvinov Andrii 535v", "About program",
-                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-        }
-
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Properties.Settings.Default.FormSize = Size;
-            Properties.Settings.Default.Save();
-        }
-
-        private void sqlButton_Click(object sender, EventArgs e)
-        {
-            GetData(this.sqlTextBox.Text, bindingSourceServerSQL, dataBaseGridView);
-        }
-
-        public void GetData(string selectCommand, BindingSource bindingSource, DataGridView dataGridView)
-        {
-            try
-            {
-                dataAdapter = new SqlDataAdapter(selectCommand, connection);
-
-                SqlCommandBuilder builder = new SqlCommandBuilder(dataAdapter);
-
-                DataTable table = new DataTable
-                {
-                    Locale = System.Globalization.CultureInfo.InvariantCulture
-                };
-                dataAdapter.Fill(table);
-                bindingSource.DataSource = table;
-
-                if (dataGridView != null)
-                {
-                    dataGridView.DataSource = bindingSource;
-
-                    dataGridView.AutoResizeColumns(
-                        DataGridViewAutoSizeColumnsMode.AllCells);
-                    dataGridView.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
-                };
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(selectCommand + "\n\n" + ex.Message, "Помилка SQL-запиту",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void sqlTextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -117,36 +75,118 @@ MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
+        public void GetData(string selectCommand)
+        {
+            try
+            {
+                _dataAdapter = new SqlDataAdapter(selectCommand, _connection);
+
+                SqlCommandBuilder builder = new SqlCommandBuilder(_dataAdapter);
+
+                DataTable table = new DataTable
+                {
+                    Locale = System.Globalization.CultureInfo.InvariantCulture
+                };
+
+                _dataAdapter.Fill(table);
+
+                List<string> columns = table.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
+                SearchAttribute.ComboBox.DataSource = columns;
+
+                bindingSourceServerSQL.DataSource = table;
+
+                if (dataBaseGridView != null)
+                {
+                    dataBaseGridView.DataSource = bindingSourceServerSQL;
+
+                    dataBaseGridView.AutoResizeColumns(
+                        DataGridViewAutoSizeColumnsMode.AllCells);
+                    dataBaseGridView.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
+                };
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(selectCommand + "\n\n" + ex.Message, "Помилка SQL-запиту",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void sqlButton_Click(object sender, EventArgs e)
+        {
+            GetData(this.sqlTextBox.Text);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Сourse work\nBy Litvinov Andrii 535v", "About program",
+                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.FormSize = Size;
+            Properties.Settings.Default.Save();
+        }
+
         private void toolStripButtonSave_Click(object sender, EventArgs e)
         {
-            dataAdapter.Update((DataTable)bindingSourceServerSQL.DataSource);
+            _dataAdapter.Update((DataTable)bindingSourceServerSQL.DataSource);
         }
 
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
-            int i = this.bindingSourceServerSQL.Find("id", SearchBox.Text);
-
-            if (i == -1)
+            int index;
+            string columnName = SearchAttribute.Text;
+            string searchText = SearchBox.Text;
+            try
             {
-                DataView dv = new DataView((DataTable)bindingSourceServerSQL.DataSource);
-                dv.RowFilter = String.Format("id LIKE {0}", SearchBox.Text);
-                if (dv.Count != 0) i = this.bindingSourceServerSQL.Find("id", dv[0]["id"]);
-                dv.Dispose();
+                index = bindingSourceServerSQL.Find(columnName, searchText);
             }
-            this.bindingSourceServerSQL.Position = i;
+            catch
+            {
+                index = -1;
+            }
+
+            if (index == -1)
+            {
+                try
+                {
+                    using (DataView view = new DataView((DataTable)bindingSourceServerSQL.DataSource))
+                    {
+                        view.RowFilter = $"{columnName} LIKE '%{searchText}%'";
+                        if (view.Count != 0)
+                        {
+                            index = bindingSourceServerSQL.Find(columnName, view[0][columnName]);
+                        }
+                    }
+                }
+                catch
+                {
+                    index = -1;
+                }
+
+            }
+
+            bindingSourceServerSQL.Position = index;
         }
 
         private void Tables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GetData("select * from " + Tables.Text, bindingSourceServerSQL, dataBaseGridView);
+            GetData("select * from " + Tables.Text);
 
         }
 
         private void Views_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GetData("select * from " + Views.Text, bindingSourceServerSQL, dataBaseGridView);
+            GetData("select * from " + Views.Text);
 
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
 
     }
 }
