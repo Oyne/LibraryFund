@@ -16,6 +16,7 @@ namespace LibraryFund
             if (Properties.Settings.Default.FormSize != null)
             {
                 Size = Properties.Settings.Default.FormSize;
+
             }
 
             dataBaseGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
