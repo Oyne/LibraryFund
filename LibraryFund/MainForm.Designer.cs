@@ -52,7 +52,7 @@
             this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigator2 = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.Tables = new System.Windows.Forms.ToolStripComboBox();
             this.Views = new System.Windows.Forms.ToolStripComboBox();
             this.SearchAttribute = new System.Windows.Forms.ToolStripComboBox();
@@ -60,8 +60,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataBaseGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceServerSQL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator2)).BeginInit();
-            this.bindingNavigator2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator)).BeginInit();
+            this.bindingNavigator.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataBaseGridView
@@ -236,15 +236,17 @@
             this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSave.Name = "toolStripButtonSave";
             this.toolStripButtonSave.Size = new System.Drawing.Size(29, 25);
-            this.toolStripButtonSave.Text = "toolStripButton1";
+            this.toolStripButtonSave.Text = "Save";
+            this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
             // 
-            // bindingNavigator2
+            // bindingNavigator
             // 
-            this.bindingNavigator2.AddNewItem = this.bindingNavigatorAddNewItem1;
-            this.bindingNavigator2.CountItem = this.bindingNavigatorCountItem1;
-            this.bindingNavigator2.DeleteItem = this.bindingNavigatorDeleteItem1;
-            this.bindingNavigator2.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.bindingNavigator2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindingNavigator.AddNewItem = this.bindingNavigatorAddNewItem1;
+            this.bindingNavigator.BindingSource = this.bindingSourceServerSQL;
+            this.bindingNavigator.CountItem = this.bindingNavigatorCountItem1;
+            this.bindingNavigator.DeleteItem = this.bindingNavigatorDeleteItem1;
+            this.bindingNavigator.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.bindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem1,
             this.bindingNavigatorMovePreviousItem1,
             this.bindingNavigatorSeparator3,
@@ -261,16 +263,16 @@
             this.Views,
             this.SearchAttribute,
             this.SearchBox});
-            this.bindingNavigator2.Location = new System.Drawing.Point(0, 28);
-            this.bindingNavigator2.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
-            this.bindingNavigator2.MoveLastItem = this.bindingNavigatorMoveLastItem1;
-            this.bindingNavigator2.MoveNextItem = this.bindingNavigatorMoveNextItem1;
-            this.bindingNavigator2.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
-            this.bindingNavigator2.Name = "bindingNavigator2";
-            this.bindingNavigator2.PositionItem = this.bindingNavigatorPositionItem1;
-            this.bindingNavigator2.Size = new System.Drawing.Size(922, 28);
-            this.bindingNavigator2.TabIndex = 5;
-            this.bindingNavigator2.Text = "bindingNavigator2";
+            this.bindingNavigator.Location = new System.Drawing.Point(0, 28);
+            this.bindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
+            this.bindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem1;
+            this.bindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem1;
+            this.bindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
+            this.bindingNavigator.Name = "bindingNavigator";
+            this.bindingNavigator.PositionItem = this.bindingNavigatorPositionItem1;
+            this.bindingNavigator.Size = new System.Drawing.Size(922, 28);
+            this.bindingNavigator.TabIndex = 5;
+            this.bindingNavigator.Text = "bindingNavigator2";
             // 
             // Tables
             // 
@@ -304,7 +306,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 453);
-            this.Controls.Add(this.bindingNavigator2);
+            this.Controls.Add(this.bindingNavigator);
             this.Controls.Add(this.sqlButton);
             this.Controls.Add(this.sqlTextBox);
             this.Controls.Add(this.dataBaseGridView);
@@ -317,15 +319,15 @@
             this.Location = settings1.FormPosition;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
-            this.Text = "LibraryFund";
+            this.Text = "Library Fund";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataBaseGridView)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceServerSQL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator2)).EndInit();
-            this.bindingNavigator2.ResumeLayout(false);
-            this.bindingNavigator2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator)).EndInit();
+            this.bindingNavigator.ResumeLayout(false);
+            this.bindingNavigator.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -354,7 +356,7 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem1;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem1;
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
-        private System.Windows.Forms.BindingNavigator bindingNavigator2;
+        private System.Windows.Forms.BindingNavigator bindingNavigator;
         private System.Windows.Forms.ToolStripComboBox Tables;
         private System.Windows.Forms.ToolStripComboBox Views;
         private System.Windows.Forms.ToolStripComboBox SearchAttribute;

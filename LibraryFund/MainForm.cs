@@ -27,6 +27,9 @@ namespace LibraryFund
             FillComboBoxes();
         }
 
+        /// <summary>
+        /// Fills ComboBoxes with values
+        /// </summary>
         private void FillComboBoxes()
         {
             try
@@ -66,15 +69,10 @@ namespace LibraryFund
             }
         }
 
-
-        private void sqlTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                sqlButton_Click(sender, e);
-            }
-        }
-
+        /// <summary>
+        /// Executes SQL command
+        /// </summary>
+        /// <param name="selectCommand">SQL command</param>
         public void GetData(string selectCommand)
         {
             try
@@ -106,33 +104,39 @@ namespace LibraryFund
             }
             catch (SqlException ex)
             {
-                MessageBox.Show(selectCommand + "\n\n" + ex.Message, "Помилка SQL-запиту",
+                MessageBox.Show(selectCommand + "\n\n" + ex.Message, "SQL-query Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        /// <summary>
+        /// Enter key press event
+        /// </summary>
+        /// <param name="sender">sqlTextBox</param>
+        /// <param name="e">KeyDown</param>
+        private void sqlTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                sqlButton_Click(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// SQL button click event
+        /// </summary>
+        /// <param name="sender">sqlButton</param>
+        /// <param name="e">Click</param>
         private void sqlButton_Click(object sender, EventArgs e)
         {
             GetData(this.sqlTextBox.Text);
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Сourse work\nBy Litvinov Andrii 535v", "About program",
-                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-        }
-
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Properties.Settings.Default.FormSize = Size;
-            Properties.Settings.Default.Save();
-        }
-
-        private void toolStripButtonSave_Click(object sender, EventArgs e)
-        {
-            _dataAdapter.Update((DataTable)bindingSourceServerSQL.DataSource);
-        }
-
+        /// <summary>
+        /// Search by chosen attribute
+        /// </summary>
+        /// <param name="sender">SearchBox</param>
+        /// <param name="e">TextChanged</param>
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
             int index;
@@ -170,16 +174,46 @@ namespace LibraryFund
             bindingSourceServerSQL.Position = index;
         }
 
+        /// <summary>
+        /// Changes displayed table
+        /// </summary>
+        /// <param name="sender">Tables</param>
+        /// <param name="e">SelectedIndexChanged</param>
         private void Tables_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetData("select * from " + Tables.Text);
-
         }
 
+        /// <summary>
+        /// Changes displayed view
+        /// </summary>
+        /// <param name="sender">Views</param>
+        /// <param name="e">SelectedIndexChanged</param>
         private void Views_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetData("select * from " + Views.Text);
+        }
 
+        /// <summary>
+        /// Shows About program window
+        /// </summary>
+        /// <param name="sender">About Button</param>
+        /// <param name="e">Click</param>
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Сourse work\nBy Litvinov Andrii 535v", "About program",
+                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        /// <summary>
+        /// Saves changes
+        /// </summary>
+        /// <param name="sender">Save Button</param>
+        /// <param name="e">Click</param>
+        private void toolStripButtonSave_Click(object sender, EventArgs e)
+        {
+
+            _dataAdapter.Update((DataTable)bindingSourceServerSQL.DataSource);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -187,6 +221,15 @@ namespace LibraryFund
             Close();
         }
 
-
+        /// <summary>
+        /// Saves form size after closing
+        /// </summary>
+        /// <param name="sender">Form</param>
+        /// <param name="e">FormClosing</param>
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.FormSize = Size;
+            Properties.Settings.Default.Save();
+        }
     }
 }
