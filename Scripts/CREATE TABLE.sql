@@ -1,0 +1,118 @@
+USE Library_fund
+GO
+
+CREATE TABLE library_fund
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    city_name NVARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE library
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    library_fund_id INT REFERENCES library_fund (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    name NVARCHAR(75) NOT NULL UNIQUE,
+    address NVARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE reading_room
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    library_id INT NOT NULL REFERENCES library (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE position
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE employee
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    library_id INT REFERENCES library (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    position_id INT REFERENCES position(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    first_name NVARCHAR(50) NOT NULL,
+    last_name NVARCHAR(50) NOT NULL,
+    phone_number NVARCHAR (50) NULL UNIQUE,
+    PRIMARY KEY (id),
+);
+
+CREATE TABLE reader_category
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE reader
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    library_fund_id INT REFERENCES library_fund (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    category_id INT REFERENCES reader_category (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    first_name NVARCHAR(50) NOT NULL,
+    last_name NVARCHAR(50) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    phone_number NVARCHAR(50) UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE book_category
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE book
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    category_id INT REFERENCES book_category (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE book_copy
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    book_id INT REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    reader_id INT REFERENCES reader (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    reading_room_id INT REFERENCES reading_room (id),
+    publisher NVARCHAR(50) NOT NULL,
+    year INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE genre
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE book_genre
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    book_id INT NOT NULL REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    genre_id INT NOT NULL REFERENCES genre (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE author
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    name NVARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE book_author
+(
+    id INT NOT NULL UNIQUE IDENTITY,
+    book_id INT NOT NULL REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    author_id INT NOT NULL REFERENCES author (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (id)
+);
