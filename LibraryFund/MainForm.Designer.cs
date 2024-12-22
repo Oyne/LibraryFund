@@ -76,7 +76,7 @@
             this.dataBaseGridView.Name = "dataBaseGridView";
             this.dataBaseGridView.RowHeadersWidth = 51;
             this.dataBaseGridView.RowTemplate.Height = 24;
-            this.dataBaseGridView.Size = new System.Drawing.Size(898, 344);
+            this.dataBaseGridView.Size = new System.Drawing.Size(900, 344);
             this.dataBaseGridView.TabIndex = 0;
             // 
             // sqlTextBox
@@ -86,7 +86,7 @@
             this.sqlTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(71)))), ((int)(((byte)(38)))));
             this.sqlTextBox.Location = new System.Drawing.Point(12, 419);
             this.sqlTextBox.Name = "sqlTextBox";
-            this.sqlTextBox.Size = new System.Drawing.Size(816, 22);
+            this.sqlTextBox.Size = new System.Drawing.Size(818, 22);
             this.sqlTextBox.TabIndex = 1;
             this.sqlTextBox.Text = "select * from book";
             this.sqlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.sqlTextBox_KeyDown);
@@ -95,7 +95,7 @@
             // 
             this.sqlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(71)))), ((int)(((byte)(38)))));
-            this.sqlButton.Location = new System.Drawing.Point(835, 418);
+            this.sqlButton.Location = new System.Drawing.Point(837, 418);
             this.sqlButton.Name = "sqlButton";
             this.sqlButton.Size = new System.Drawing.Size(75, 23);
             this.sqlButton.TabIndex = 2;
@@ -110,7 +110,7 @@
             this.programToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(922, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(924, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -127,19 +127,19 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(221, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -270,7 +270,7 @@
             this.bindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
             this.bindingNavigator.Name = "bindingNavigator";
             this.bindingNavigator.PositionItem = this.bindingNavigatorPositionItem1;
-            this.bindingNavigator.Size = new System.Drawing.Size(922, 28);
+            this.bindingNavigator.Size = new System.Drawing.Size(924, 28);
             this.bindingNavigator.TabIndex = 5;
             this.bindingNavigator.Text = "bindingNavigator2";
             // 
@@ -305,7 +305,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 453);
+            this.ClientSize = new System.Drawing.Size(924, 453);
             this.Controls.Add(this.bindingNavigator);
             this.Controls.Add(this.sqlButton);
             this.Controls.Add(this.sqlTextBox);

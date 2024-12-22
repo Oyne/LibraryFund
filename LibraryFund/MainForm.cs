@@ -201,7 +201,7 @@ namespace LibraryFund
         /// <param name="e">Click</param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Сourse work\nBy Litvinov Andrii 535v", "About program",
+            MessageBox.Show("Сourse work\nBy Litvinov Andrii 545v", "About program",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
